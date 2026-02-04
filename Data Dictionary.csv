@@ -1,0 +1,16 @@
+Column_name,Description,Data type
+VIN (1-10),The 1st 10 characters of each vehicle's Vehicle Identification Number (VIN).,Text
+County,This is the geographic region of a state that a vehicle's owner is listed to reside within. Vehicles registered in Washington state may be located in other states.,Text
+City,The city in which the registered owner resides.,Text
+State,This is the geographic region of the country associated with the record. These addresses may be located in other states.,Text
+Postal Code,The 5 digit zip code in which the registered owner resides.,Text
+Model Year,"The model year of the vehicle, determined by decoding the Vehicle Identification Number (VIN).",Text
+Make,"The manufacturer of the vehicle, determined by decoding the Vehicle Identification Number (VIN).",Text
+Model,"The model of the vehicle, determined by decoding the Vehicle Identification Number (VIN).",Text
+Electric Vehicle Type,This distinguishes the vehicle as all electric or a plug-in hybrid.,Text
+Clean Alternative Fuel Vehicle (CAFV) Eligibility,This categorizes a vehicle as a Clean Alternative Fuel Vehicle (CAFV) based on the fuel and electric-only range requirements in House Bill 2042 as passed during the 2019 legislative session.,Text
+Electric Range,Describes how far a vehicle can travel purely on its electric charge.,Number
+Legislative District,"The specific section of Washington State that the vehicle's owner resides in, as represented in the state legislature.",Text
+DOL Vehicle ID,Unique number assigned to each vehicle by Department of Licensing for identification purposes.,Text
+Vehicle Location,The center of the ZIP Code for the registered vehicle.,Point
+Electric Utility,"This is the electric power retail service territories serving the address of the registered vehicle. All ownership types for areas in Washington are included: federal, investor owned, municipal, political subdivision, and cooperative. If the address for the registered vehicle falls into an area with overlapping electric power retail service territories then a single pipe | delimits utilities of same TYPE and a double pipe || delimits utilities of different types. We combined vehicle address and Homeland Infrastructure Foundation Level Database (HIFLD) (https://gii.dhs.gov/HIFLD) Retail_Service_Territories feature layer using a geographic information system to assign values for this field. Blanks occur for vehicles with addresses outside of Washington or for addresses falling into areas in Washington not containing a mapped electric power retail service territory in the source data.",Text
