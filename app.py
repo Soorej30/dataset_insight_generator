@@ -105,7 +105,7 @@ def get_main_columns(cols, schema_file):
 
         return json.loads(optimized_resume_text)['columns']
 
-def generate_ai_insights(df, specific_analysis=None, schema_file=None, max_rows=5):
+def generate_ai_insights(df, schema_file=None, max_rows=5):
     """
     Build a compact dataset summary and ask Ollama to produce structured insights.
     Returns parsed JSON (dict) with keys per the schema below.
@@ -164,8 +164,6 @@ def generate_ai_insights(df, specific_analysis=None, schema_file=None, max_rows=
     - small numeric stats:
     {json.dumps(numeric_stats, ensure_ascii=False)}
 
-    Specific request: {specific_analysis or "None"}
-
     Return only valid JSON matching the schema.
     """
 
@@ -210,8 +208,8 @@ st.markdown("Upload a CSV to get automated statistics, visualizations, and data 
 st.sidebar.header("1. Upload Data")
 uploaded_file = st.sidebar.file_uploader("Choose a CSV file", type="csv")
 schema_file = st.sidebar.file_uploader("Upload Data Dictionary (Optional)", type=["csv", "txt", "xlsx"])
-specific_analysis = st.sidebar.text_area("Specific Analysis Request (Optional)", 
-                                        placeholder="e.g., 'Focus on the relationship between Price and Sales'")
+# specific_analysis = st.sidebar.text_area("Specific Analysis Request (Optional)", 
+#                                         placeholder="e.g., 'Focus on the relationship between Price and Sales'")
 
 # Add run / reset controls using session_state
 if "run_analysis" not in st.session_state:
@@ -364,23 +362,23 @@ if uploaded_file is not None and st.session_state["run_analysis"]:
     # Plot 4: Categorical Breakdown (Bar Chart)
 
     if cat_cols:
-        with fig_cols[1]:
-            target_cat = st.selectbox("Select column for Bar Chart:", cat_cols, index = cat_cols.index(cat_main_5_cols[1]), key="bar_box")
-            st.write(f"**Frequency of {target_cat}**")
-            # Creating a frequency dataframe for Plotly
-            counts = df[target_cat].value_counts().reset_index().head(10)
-            counts.columns = [target_cat, 'count']
-            
-            fig = px.bar(
-                counts, 
-                x=target_cat, 
-                y='count', 
-                color='count',
-                color_continuous_scale='Viridis'
-            )
-            st.plotly_chart(fig, use_container_width=True)
-    # Plot 5: Relationship (Scatter Plot)
+        # with fig_cols[1]:
+        target_cat = st.selectbox("Select column for Bar Chart:", cat_cols, index = cat_cols.index(cat_main_5_cols[1]), key="bar_box")
+        st.write(f"**Frequency of {target_cat}**")
+        # Creating a frequency dataframe for Plotly
+        counts = df[target_cat].value_counts().reset_index().head(10)
+        counts.columns = [target_cat, 'count']
+        
+        fig = px.bar(
+            counts, 
+            x=target_cat, 
+            y='count', 
+            color='count',
+            color_continuous_scale='Viridis'
+        )
+        st.plotly_chart(fig, use_container_width=True)
 
+    # Plot 5: Relationship (Scatter Plot)
     if len(num_cols) >= 2:
         st.write(f"**Interactive Relationship: {num_cols[0]} vs {num_cols[1]}**")
         fig = px.scatter(df, x=num_cols[0], y=num_cols[1], 
@@ -438,7 +436,7 @@ if uploaded_file is not None and st.session_state["run_analysis"]:
     #         st.info(f"**Custom Request Analysis:** {specific_analysis}")
     #         st.write("- Analyzing your custom request... (In a live GenAI integration, this section would be populated by the LLM response).")
     
-    ai_output = generate_ai_insights(df, specific_analysis, schema_file)
+    ai_output = generate_ai_insights(df, schema_file)
     # show results
     with st.expander("Click to generate AI Analysis"):
         st.write("### Key Patterns & Insights (from Ollama)")
