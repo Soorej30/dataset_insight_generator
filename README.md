@@ -41,7 +41,7 @@ Quick test (optional)
 
 Run the Streamlit app
 ```bash
-streamlit run app.py
+streamlit run src/app.py
 ```
 This opens the app in your browser. Upload a CSV and optionally a data dictionary (CSV/XLSX/TXT). Click "Run Analysis" to trigger the AI-driven insights.
 
